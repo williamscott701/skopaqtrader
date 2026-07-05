@@ -1,18 +1,12 @@
-<div align="center">
-
-<img src="assets/hero_banner.png" alt="SkopaqTrader AI Platform" style="max-width: 100%; height: auto; object-fit: contain;" />
-
 # SkopaqTrader
 
 **An open-source AI algorithmic trading platform for Indian equities**
 
 Built on [TradingAgents](https://github.com/TauricResearch/TradingAgents) (Apache 2.0) by TauricResearch
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/Python-3.11+-3776ab?logo=python&logoColor=white)](https://python.org)
-[![Built with LangGraph](https://img.shields.io/badge/Built_with-LangGraph-grey)](https://langchain-ai.github.io/langgraph/)
-
-</div>
+[License](LICENSE)
+[Python](https://python.org)
+[Built with LangGraph](https://langchain-ai.github.io/langgraph/)
 
 > [!CAUTION]
 > **IMPORTANT LEGAL DISCLAIMER**
@@ -53,7 +47,6 @@ SkopaqTrader extends the [TradingAgents](https://github.com/TauricResearch/Tradi
 - **Crypto Support** — On-chain (Blockchair), DeFi/tokenomics (DeFiLlama/CoinGecko), and funding rate (Binance Futures) analysts activate when `asset_class=crypto`.
 - **Blockchain Infrastructure** — Live Binance trading, WebSocket real-time feeds, gas oracles (ETH/Polygon/Arbitrum/Optimism), whale transaction alerts, and multi-exchange abstraction layer.
 
-<img src="assets/dashboard.png" alt="Skopaq Dashboard" style="max-width: 100%; height: auto;" />
 *Dashboard for monitoring agent workflows, market scanning, and trade execution.*
 
 - **Paper → Live pipeline** — Start paper, graduate to live when ready
@@ -115,13 +108,13 @@ graph TD
     Orchestrator -. "Reflection" .-> DataAgents
 ```
 
+
+
 *High-level overview of the SkopaqTrader architecture, connecting the user interfaces to the multi-agent AI team and the INDstocks execution engine.*
 
 ### 🤖 AI Agent Workflow
 
-<img src="assets/agent_network.png" alt="Concept: AI Agent Neural Network" style="max-width: 100%; height: auto;" />
-<br/>
-<sub>*Conceptual representation of the high-speed data flow between the AI Analyst agents, debate researchers, and the core routing system.*</sub>
+*Conceptual representation of the high-speed data flow between the AI Analyst agents, debate researchers, and the core routing system.*
 
 ```mermaid
 sequenceDiagram
@@ -154,6 +147,8 @@ sequenceDiagram
     end
 ```
 
+
+
 *The step-by-step collaborative workflow of our AI agent team, from data gathering to safe execution.*
 
 ### 🚀 Usage Lifecycle (For Beginners)
@@ -174,13 +169,13 @@ flowchart LR
     S6 -. "Feeds next trade" .-> S2
 ```
 
+
+
 *A simple mental model of how SkopaqTrader operates, making complex algorithmic trading easy to understand.*
 
 ### 🔍 Deep-Dive: Scanner Engine & Advanced Risk
 
-<img src="assets/data_scanner.png" alt="Concept: Real-Time Market Scanner" style="max-width: 100%; height: auto;" />
-<br/>
-<sub>*Conceptual UI of the SkopaqTrader scanner engine processing live NIFTY 50 metrics, sentiment scores, and confidence data.*</sub>
+*Conceptual UI of the SkopaqTrader scanner engine processing live NIFTY 50 metrics, sentiment scores, and confidence data.*
 
 The real power of SkopaqTrader lies in its parallel scanner and dynamic risk management logic. When running `skopaq scan`, the system doesn't rely on just one LLM or simple heuristics. It queries multiple models simultaneously while injecting Indian market regime rules.
 
@@ -232,20 +227,24 @@ flowchart TD
     EmitTrade -.-> SupaDB["Supabase DB<br/>Record Trade and Memory"]:::memory
 ```
 
+
+
 ### Multi-Model Tiering
 
-| Agent Role | Primary Model | Fallback | Local Fallback |
-|------------|---------------|----------|----------------|
-| Market / Fundamentals Analyst | Gemini 3 Flash | — | Ollama (auto) |
-| Social Analyst | Grok 3 Mini (via OpenRouter) | Gemini 3 Flash | Ollama (auto) |
-| News Analyst | Gemini 3 Flash | — | Ollama (auto) |
-| Research Manager | Claude Opus 4.6 | Gemini 3 Flash | — (quality critical) |
-| Risk Manager | Claude Opus 4.6 | Gemini 3 Flash | — (quality critical) |
-| Chat Brain | Claude Opus 4.6 | Gemini 3 Flash | Ollama (auto) |
-| Bull / Bear / Debate Researchers | Gemini 3 Flash | — | Ollama (auto) |
-| Trader | Gemini 3 Flash | — | Ollama (auto) |
-| Sell Analyst | Gemini 3 Flash | — | Ollama (auto) |
-| Scanner Screeners | Gemini 3 Flash, Grok 3 Mini, Perplexity Sonar | (concurrent) | — |
+
+| Agent Role                       | Primary Model                                 | Fallback       | Local Fallback       |
+| -------------------------------- | --------------------------------------------- | -------------- | -------------------- |
+| Market / Fundamentals Analyst    | Gemini 3 Flash                                | —              | Ollama (auto)        |
+| Social Analyst                   | Grok 3 Mini (via OpenRouter)                  | Gemini 3 Flash | Ollama (auto)        |
+| News Analyst                     | Gemini 3 Flash                                | —              | Ollama (auto)        |
+| Research Manager                 | Claude Opus 4.6                               | Gemini 3 Flash | — (quality critical) |
+| Risk Manager                     | Claude Opus 4.6                               | Gemini 3 Flash | — (quality critical) |
+| Chat Brain                       | Claude Opus 4.6                               | Gemini 3 Flash | Ollama (auto)        |
+| Bull / Bear / Debate Researchers | Gemini 3 Flash                                | —              | Ollama (auto)        |
+| Trader                           | Gemini 3 Flash                                | —              | Ollama (auto)        |
+| Sell Analyst                     | Gemini 3 Flash                                | —              | Ollama (auto)        |
+| Scanner Screeners                | Gemini 3 Flash, Grok 3 Mini, Perplexity Sonar | (concurrent)   | —                    |
+
 
 > **Note:** Perplexity Sonar is used only in the scanner (plain prompts). It does not support tool calling, so it cannot serve as an analyst in the LangGraph agent pipeline.
 >
@@ -255,13 +254,15 @@ flowchart TD
 
 SkopaqTrader includes comprehensive blockchain infrastructure for crypto trading:
 
-| Feature | Module | Description |
-|---------|--------|-------------|
-| **Live Trading** | `skopaq/broker/binance_auth.py` | Authenticated Binance API for spot trading with API keys |
-| **Real-Time Feeds** | `skopaq/broker/binance_ws.py` | WebSocket streams for ticker, trades, order book, klines |
-| **Gas Oracle** | `skopaq/blockchain/gas.py` | ETH, Polygon, Arbitrum, Optimism gas prices + tx cost estimates |
-| **Whale Alerts** | `skopaq/blockchain/whales.py` | Large transaction monitoring for BTC, ETH, SOL |
-| **Multi-Exchange** | `skopaq/broker/exchange.py` | Unified abstraction layer (Binance, Coinbase, Kraken) |
+
+| Feature             | Module                          | Description                                                     |
+| ------------------- | ------------------------------- | --------------------------------------------------------------- |
+| **Live Trading**    | `skopaq/broker/binance_auth.py` | Authenticated Binance API for spot trading with API keys        |
+| **Real-Time Feeds** | `skopaq/broker/binance_ws.py`   | WebSocket streams for ticker, trades, order book, klines        |
+| **Gas Oracle**      | `skopaq/blockchain/gas.py`      | ETH, Polygon, Arbitrum, Optimism gas prices + tx cost estimates |
+| **Whale Alerts**    | `skopaq/blockchain/whales.py`   | Large transaction monitoring for BTC, ETH, SOL                  |
+| **Multi-Exchange**  | `skopaq/broker/exchange.py`     | Unified abstraction layer (Binance, Coinbase, Kraken)           |
+
 
 ```python
 # Live Binance trading
@@ -326,7 +327,7 @@ ANTHROPIC_API_KEY=...       # Claude Opus 4.6 (research/risk manager)
 OPENROUTER_API_KEY=...      # Grok + Perplexity Sonar (social + news)
 ```
 
-See [`.env.example`](.env.example) for all configuration options.
+See `[.env.example](.env.example)` for all configuration options.
 
 ## Usage
 
@@ -438,27 +439,31 @@ Open Claude Code in the `skopaqtrader` directory. The MCP server starts automati
 
 These are pre-built in `.claude/skills/` and available immediately:
 
-| Command | What it does |
-|---------|-------------|
-| `/quote RELIANCE` | Real-time stock quote via MCP |
-| `/analyze TCS` | Full 15-agent analysis pipeline — Claude reasons through 4 analysts, bull/bear debate, risk debate, and final decision using its own LLM |
-| `/scan` | Market scanner — finds top trading candidates |
-| `/portfolio` | Shows positions, holdings, funds, P&L |
-| `/trade INFY` | Analysis + safety check + paper execution (with confirmation) |
+
+| Command           | What it does                                                                                                                             |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `/quote RELIANCE` | Real-time stock quote via MCP                                                                                                            |
+| `/analyze TCS`    | Full 15-agent analysis pipeline — Claude reasons through 4 analysts, bull/bear debate, risk debate, and final decision using its own LLM |
+| `/scan`           | Market scanner — finds top trading candidates                                                                                            |
+| `/portfolio`      | Shows positions, holdings, funds, P&L                                                                                                    |
+| `/trade INFY`     | Analysis + safety check + paper execution (with confirmation)                                                                            |
+
 
 ### MCP Tools (18 available)
 
 All tools are callable by Claude Code natively. Read-only tools are auto-approved via `.claude/settings.json`:
 
-| Category | Tools |
-|----------|-------|
-| **Market Data** | `get_quote`, `get_historical` |
-| **Portfolio** | `get_positions`, `get_holdings`, `get_funds`, `get_orders` |
-| **Analysis** | `analyze_stock`, `scan_market`, `check_safety` |
-| **Execution** | `place_order` (paper/live, safety-checked) |
+
+| Category          | Tools                                                                                                                  |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| **Market Data**   | `get_quote`, `get_historical`                                                                                          |
+| **Portfolio**     | `get_positions`, `get_holdings`, `get_funds`, `get_orders`                                                             |
+| **Analysis**      | `analyze_stock`, `scan_market`, `check_safety`                                                                         |
+| **Execution**     | `place_order` (paper/live, safety-checked)                                                                             |
 | **Data Pipeline** | `gather_market_data`, `gather_news_data`, `gather_fundamentals_data`, `gather_social_data`, `gather_all_analysis_data` |
-| **Memory** | `recall_agent_memories`, `save_trade_reflection` |
-| **System** | `system_status` |
+| **Memory**        | `recall_agent_memories`, `save_trade_reflection`                                                                       |
+| **System**        | `system_status`                                                                                                        |
+
 
 ### Dual-Mode Architecture
 
@@ -592,7 +597,7 @@ skopaqtrader/
 
 ## Security
 
-- **No secrets in the repository.** All API keys, tokens, and credentials are loaded from environment variables via `.env` (gitignored). See [`.env.example`](.env.example) for the full list of configurable keys.
+- **No secrets in the repository.** All API keys, tokens, and credentials are loaded from environment variables via `.env` (gitignored). See `[.env.example](.env.example)` for the full list of configurable keys.
 - **INDstocks tokens** are stored locally in `~/.skopaq/token.json` (gitignored) and validated on every daemon session start.
 - **Immutable safety rules** in `skopaq/constants.py` enforce position limits, order value caps, and rate limits that cannot be overridden at runtime.
 - **Daemon safety variants** apply tighter limits for unattended operation (fewer positions, lower order caps, slower pace).
@@ -653,36 +658,40 @@ docker compose up -d   # Starts API + Telegram bot
 
 ### Available Services
 
-| Service | Command | Description |
-|---------|---------|-------------|
-| `api` | Default | FastAPI backend (port 8000) |
-| `chat` | Interactive | Claude Code-style AI chatbot |
-| `telegram` | Background | Telegram bot (@Skopaq_bot) |
-| `mcp` | stdio | MCP server for Claude Code |
-| `daemon` | One-shot | Paper trading session |
-| `daemon-live` | One-shot | LIVE trading session |
-| `monitor` | Background | Position monitor |
-| `scan` | One-shot | Market scanner |
-| `status` | One-shot | System health check |
-| `shell` | Interactive | Bash shell for debugging |
+
+| Service       | Command     | Description                  |
+| ------------- | ----------- | ---------------------------- |
+| `api`         | Default     | FastAPI backend (port 8000)  |
+| `chat`        | Interactive | Claude Code-style AI chatbot |
+| `telegram`    | Background  | Telegram bot (@Skopaq_bot)   |
+| `mcp`         | stdio       | MCP server for Claude Code   |
+| `daemon`      | One-shot    | Paper trading session        |
+| `daemon-live` | One-shot    | LIVE trading session         |
+| `monitor`     | Background  | Position monitor             |
+| `scan`        | One-shot    | Market scanner               |
+| `status`      | One-shot    | System health check          |
+| `shell`       | Interactive | Bash shell for debugging     |
+
 
 ## Cloud Deployment
 
 > [!WARNING]
 > Deploying autonomous trading to a cloud server means orders will execute **without human supervision**. Start with paper mode, set conservative limits, and monitor logs daily. You are fully responsible for any trades placed by the daemon.
 
-| Service | Config | Purpose |
-|---------|--------|---------|
-| **Railway** (API) | [`railway.toml`](railway.toml) | FastAPI backend server |
-| **Railway** (Daemon) | [`railway-daemon.toml`](railway-daemon.toml) | Autonomous trading cron (09:10 IST, weekdays) |
-| **Vercel** | `frontend/` | Next.js dashboard |
-| **Supabase** | `supabase/` | PostgreSQL + Auth + agent memory |
-| **Upstash** | — | Serverless Redis (semantic LLM cache) |
-| **Cloudflare Tunnel** | — | Static IP for INDstocks API whitelist |
+
+| Service               | Config                                       | Purpose                                       |
+| --------------------- | -------------------------------------------- | --------------------------------------------- |
+| **Railway** (API)     | `[railway.toml](railway.toml)`               | FastAPI backend server                        |
+| **Railway** (Daemon)  | `[railway-daemon.toml](railway-daemon.toml)` | Autonomous trading cron (09:10 IST, weekdays) |
+| **Vercel**            | `frontend/`                                  | Next.js dashboard                             |
+| **Supabase**          | `supabase/`                                  | PostgreSQL + Auth + agent memory              |
+| **Upstash**           | —                                            | Serverless Redis (semantic LLM cache)         |
+| **Cloudflare Tunnel** | —                                            | Static IP for INDstocks API whitelist         |
+
 
 ## Upstream Modifications
 
-All 34 changes to the vendored `tradingagents/` directory are documented in [`UPSTREAM_CHANGES.md`](UPSTREAM_CHANGES.md).
+All 34 changes to the vendored `tradingagents/` directory are documented in `[UPSTREAM_CHANGES.md](UPSTREAM_CHANGES.md)`.
 
 **Modification philosophy:** Minimal, surgical changes. The upstream graph runs as a black box via `propagate()`. Skopaq wraps it with execution, safety, and multi-model tiering.
 
@@ -783,6 +792,4 @@ SkopaqTrader is a derivative work of [TradingAgents](https://github.com/TauricRe
 
 ---
 
-<div align="center">
-<sub><strong>Disclaimer:</strong> This software is for educational and research purposes only. It does not constitute financial, investment, or trading advice. Trading in financial markets carries substantial risk. The authors accept no liability for losses incurred through the use of this software. See the <a href="#important-legal-disclaimer">full disclaimer</a> at the top of this page.</sub>
-</div>
+**Disclaimer:** This software is for educational and research purposes only. It does not constitute financial, investment, or trading advice. Trading in financial markets carries substantial risk. The authors accept no liability for losses incurred through the use of this software. See the [full disclaimer](#important-legal-disclaimer) at the top of this page.
