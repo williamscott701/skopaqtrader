@@ -1,5 +1,7 @@
 # SkopaqTrader
 
+> **Note:** This is [williamscott701](https://github.com/williamscott701)'s fork of [samuelvinay91/skopaqtrader](https://github.com/samuelvinay91/skopaqtrader).
+
 **An open-source AI algorithmic trading platform for Indian equities**
 
 Built on [TradingAgents](https://github.com/TauricResearch/TradingAgents) (Apache 2.0) by TauricResearch
@@ -28,7 +30,7 @@ SkopaqTrader extends the [TradingAgents](https://github.com/TauricResearch/Tradi
 
 **Key capabilities:**
 
-- **Claude Code Integration** — Native MCP server with 18 tools + custom slash commands (`/analyze`, `/quote`, `/scan`, `/portfolio`, `/trade`). Run the full 15-agent analysis pipeline using Claude's own reasoning at zero extra LLM cost.
+- **Claude Code Integration** — Native MCP server with 36 tools + custom slash commands (`/analyze`, `/quote`, `/scan`, `/portfolio`, `/trade`). Run the full 15-agent analysis pipeline using Claude's own reasoning at zero extra LLM cost.
 - **Interactive AI Chat** — Claude Code-style REPL (`skopaq chat`) with streaming responses, tool panels, human-in-the-loop trade confirmation, and LangGraph checkpointing.
 - **Ollama Local Fallback** — Run analyst roles on local models via Ollama/MLX for offline operation and zero API cost.
 - **Post-Trade Reflection Loop** — Reflection node analyzes past trades and injects history into the analyst context, enabling the system to incorporate lessons from wins and losses over time.
@@ -46,10 +48,6 @@ SkopaqTrader extends the [TradingAgents](https://github.com/TauricResearch/Tradi
 - **Min Profit Gate** — Two-layer protection against brokerage-eating-profit: prompt guidance to the sell analyst LLM + hard override in the monitor that blocks sells when net profit (after estimated brokerage) is below threshold.
 - **Crypto Support** — On-chain (Blockchair), DeFi/tokenomics (DeFiLlama/CoinGecko), and funding rate (Binance Futures) analysts activate when `asset_class=crypto`.
 - **Blockchain Infrastructure** — Live Binance trading, WebSocket real-time feeds, gas oracles (ETH/Polygon/Arbitrum/Optimism), whale transaction alerts, and multi-exchange abstraction layer.
-
-*Dashboard for monitoring agent workflows, market scanning, and trade execution.*
-
-- **Paper → Live pipeline** — Start paper, graduate to live when ready
 
 > **Reminder:** See the [full disclaimer](#important-legal-disclaimer) at the top. This is a research tool, not a trading recommendation system.
 
@@ -300,7 +298,7 @@ alerts = await check_whale_alerts("ETH", min_value_usd=100000)
 ### Setup
 
 ```bash
-git clone https://github.com/bvkio/skopaqtrader.git
+git clone https://github.com/williamscott701/skopaqtrader.git
 cd skopaqtrader
 
 # Create virtual environment
@@ -410,7 +408,7 @@ SkopaqTrader integrates natively with [Claude Code](https://claude.ai/code) as a
 **Step 1: Install SkopaqTrader**
 
 ```bash
-git clone https://github.com/samuelvinay91/skopaqtrader.git
+git clone https://github.com/williamscott701/skopaqtrader.git
 cd skopaqtrader
 pip install -e .
 cp .env.example .env   # Add your API keys
@@ -433,7 +431,7 @@ Add to your `~/.claude.json` (or run `/mcp add` in Claude Code):
 
 **Step 3: Restart Claude Code**
 
-Open Claude Code in the `skopaqtrader` directory. The MCP server starts automatically. You'll see 18 trading tools available.
+Open Claude Code in the `skopaqtrader` directory. The MCP server starts automatically. You'll see 36 trading tools available.
 
 ### Custom Slash Commands (Skills)
 
@@ -449,7 +447,7 @@ These are pre-built in `.claude/skills/` and available immediately:
 | `/trade INFY`     | Analysis + safety check + paper execution (with confirmation)                                                                            |
 
 
-### MCP Tools (18 available)
+### MCP Tools (36 available)
 
 All tools are callable by Claude Code natively. Read-only tools are auto-approved via `.claude/settings.json`:
 
@@ -459,9 +457,12 @@ All tools are callable by Claude Code natively. Read-only tools are auto-approve
 | **Market Data**   | `get_quote`, `get_historical`                                                                                          |
 | **Portfolio**     | `get_positions`, `get_holdings`, `get_funds`, `get_orders`                                                             |
 | **Analysis**      | `analyze_stock`, `scan_market`, `check_safety`                                                                         |
-| **Execution**     | `place_order` (paper/live, safety-checked)                                                                             |
+| **Execution**     | `place_order`, `place_gtt_order`, `list_gtt_orders`, `setup_swing_trade`, `place_amo_order`, `place_bracket`, `place_cover`, `place_basket` (paper/live, safety-checked) |
+| **Options**       | `get_option_chain`, `suggest_option_trade`, `buy_option_contract`                                                      |
+| **Futures & Funds** | `trade_future`, `invest_mutual_fund`, `list_mutual_funds`                                                            |
 | **Data Pipeline** | `gather_market_data`, `gather_news_data`, `gather_fundamentals_data`, `gather_social_data`, `gather_all_analysis_data` |
 | **Memory**        | `recall_agent_memories`, `save_trade_reflection`                                                                       |
+| **Learning / Backtesting** | `backtest_strategy`, `run_monte_carlo_test`, `get_learning_insights`, `get_symbol_stats`, `evolve_strategy`         |
 | **System**        | `system_status`                                                                                                        |
 
 
@@ -569,7 +570,7 @@ skopaqtrader/
 │   ├── memory/                 # BM25-indexed agent memory + trade reflection loop
 │   ├── risk/                   # ATR sizing, regime detection, drawdown, calendar
 │   ├── scanner/                # Multi-model market scanner engine
-│   ├── mcp_server.py           # MCP server (18 tools for Claude Code integration)
+│   ├── mcp_server.py           # MCP server (36 tools for Claude Code integration)
 │   ├── config.py               # Pydantic Settings (env_prefix="SKOPAQ_")
 │   └── constants.py            # Immutable safety rules + daemon variants
 │
@@ -629,7 +630,7 @@ The fastest way to get started. One image, all services.
 docker pull skopaqtrader/skopaqtrader:latest
 
 # Or build locally
-git clone https://github.com/samuelvinay91/skopaqtrader.git
+git clone https://github.com/williamscott701/skopaqtrader.git
 cd skopaqtrader
 docker build -t skopaqtrader/skopaqtrader .
 ```
